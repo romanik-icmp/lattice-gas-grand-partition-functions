@@ -4,6 +4,7 @@
 %% Mathematics
 %\usepackage{amsmath,amssymb,amsthm}
 %\usepackage{amsmath}
+\usepackage{amssymb} % \mathbb{}
 
 %% Physics
 \usepackage{physics}
@@ -19,6 +20,9 @@
 
 %% ORCID
 \usepackage{orcidlink} % to insert a hyperlinked ORCiD logo
+
+%% Page output manipulation
+%\usepackage[2-3]{pagesel}
 
 %% Page layout settings
 %\textwidth 160mm
@@ -46,35 +50,60 @@
 	
 	\tableofcontents
 	
-	\section{Introduction}
+	%\section{Introduction}
 	
-	\section{Model}
+	\pagebreak
+	\section{General formulation}
 	
-	A generic expression for the grand partition function $\Xi$ of a classical, many-particle system in equilibrium at (absolute) temperature $T$ and chemical potential $\mu$ is given by the following sum over all possible number $N$ of particles in volume $V$~\cite[Eq.~(2.4.6)]{HansenMcDonald13}: 
+	Consider a classical system of identical particles of mass $m$, confined to a volume $V$, at temperature $T$ and chemical potential $\mu$. The grand partition function (GPF) is given by the following sum over all possible particle numbers $N$~\cite[Eq.~(2.4.6)]{HansenMcDonald13}: 
 	\begin{equation}
-		\Xi = \sum_{N=0}^{\infty}
-		\frac{e^{N\beta\mu}}{h^{3N} N!} \int \int \exp(-\beta \mathcal{H}) {\rm d} {\mathbf{r}}^N {\rm d} {\mathbf{p}}^N,
+		\label{def:gpf}
+		\Xi(T, V, \mu) = \sum_{N=0}^{\infty}
+		\frac{e^{N\beta\mu}}{h^{3N} N!} \int_{V^N} {\rm d} {\mathbf{r}}^N \int_{\mathbb{R}^{3N}} {\rm d} {\mathbf{p}}^N \exp\left[-\beta \mathcal{H}_N(\mathbf{r}^N, \mathbf{p}^N)\right] ,
 	\end{equation}
-	where $\beta = 1/(k_{\mathrm B} T)$ is the inverse temperature, $k_{\mathrm B}$ being the Boltzmann constant, $h$ is the Planck constant, $\mathcal{H}$ is the Hamiltonian of the system. The integration elements are $({\rm d} \mathbf{r})^N \equiv {\rm d}{\mathbf{r}_1} \ldots {\rm d}{\mathbf{r}_N}$ for space coordinates $\mathbf{r}_i$ of $N$ particles, and $({\rm d} \mathbf{p})^N \equiv {\rm d}{\mathbf{p}_1} \ldots {\rm d}{\mathbf{p}_N}$ for momenta $\mathbf{p}_i$ of $N$ particles.
+	where $\beta = 1/(k_{\mathrm B} T)$ is the inverse temperature, $k_{\mathrm B}$ is the Boltzmann constant, $h$ is the Planck constant, and $\mathcal{H}_N$ is the Hamiltonian of the $N$-particle system. The positions and momenta of the particles are denoted by
+	\begin{equation}
+		\mathbf{r}^N \equiv \mathbf{r}_1, \ldots, \mathbf{r}_N, \quad \mathbf{p}^N \equiv \mathbf{p}_1, \ldots, \mathbf{p}_N,
+	\end{equation}
+	respectively, with the integration elements defined as
+	\begin{equation}
+		{\rm d} \mathbf{r}^N = \prod\limits_{i=1}^{N} {\rm d}^3 r_i, \quad {\rm d} {\mathbf{p}^N} = \prod\limits_{i=1}^{N} {\rm d}^3 p_i.
+	\end{equation}
 	
-	In a similar manner to the note from \cite[p.~23]{HansenMcDonald13}, the inclusion of the factor $1/h^{3N}$ in this definition ensures that $\Xi$ is dimensionless and consistent in form with the corresponding quantity of quantum statistical mechanics, while division by $N!$ ensures that microscopic states are correctly counted.
+	The inclusion of the factor $1/h^{3N}$ in this definition ensures that $\Xi$ is dimensionless and consistent in form with the corresponding quantity of quantum statistical mechanics, while division by $N!$ ensures that microscopic states are correctly counted~\cite[p.~23]{HansenMcDonald13}.
 	
-	The dynamical state of the system of $N$ particles at any instant is completely specified by the $3N$ coordinates $\mathbf{r}^N \equiv \mathbf{r}_1, \ldots, \mathbf{r}_1$ and $3N$ momenta $\mathbf{p}^N \equiv \mathbf{p}_1, \ldots, \mathbf{p}_1$. The hamiltonian of this system is written in the form
+	In the absence of external fields, the Hamiltonian is written as
 	\begin{equation}
 		\label{def:hamiltonian}
 		\mathcal{H}(\mathbf{r}^N, \mathbf{p}^N) = K_N(\mathbf{p}^N) + W_N(\mathbf{r}^N),
 	\end{equation}
 	where
 	\begin{equation}
-		K_N = \sum_{i=1}^{N}\frac{\abs{{\mathbf{p}_i}^2}}{2m}
+		K_N(\mathbf{p}^N) = \sum_{i=1}^{N}\frac{\abs{{\mathbf{p}_i}}^2}{2m}
 	\end{equation}
-	is the kinetic energy, $m$ being the mass of a particle, $W_N$ is the interparticle potential energy (the potential energy of interparticle interaction). Note that in Eq.~\eqref{def:hamiltonian} any additional terms due to external fields are ignored.
+	is the kinetic energy and $W_N(\mathbf{r}^N)$ is the interparticle potential energy (the potential energy of interparticle interaction).
 	
+	Since the kinetic energy is quadratic in the momenta, the momentum integrations in Eq.~\eqref{def:gpf} can be evaluated analytically. Each momentum component contributes a factor $(2\pi m k_{\mathrm{B}} T)^{1/2}$. The GPF is therefore takes the form	
 	\begin{equation}
-		\Xi = \sum_{N=0}^{\infty} \frac{z^N}{N!} Z_N,
+		\Xi(T, V, \mu) = \sum_{N=0}^{\infty} \frac{\zeta^N}{N!} Z_N,
 	\end{equation}
+	where
+	\begin{equation}
+		\zeta = \frac{\exp(\beta \mu)}{\Lambda^3}
+	\end{equation}
+	is the activity, and
+	\begin{equation}
+		\Lambda = \frac{h}{\sqrt{2\pi m k_{\mathrm{B}} T}} = \left(\frac{2 \pi \beta \hbar^2}{m} \right)^{1/2},
+	\end{equation}
+	is the thermal de Broglie wavelength, with $\hbar = h/(2\pi)$ denoting the reduced Planck constant.
 	
-	\section{Conclusions}
+	The configuration integral $Z_N$ is defined as
+	\begin{equation}
+		Z_N = \int_{V^N} \exp\left[-\beta W_{N}(\mathbf{r}^N)\right]{\rm d}\mathbf{r}^N,
+	\end{equation}
+	where the integration is performed over all configurations of $N$ particles in the volume $V$, with $Z_0 = 1$.
+	
+	%\section{Conclusions}
 	
 	% Bibliography
 	\bibliographystyle{elsarticle-num}
