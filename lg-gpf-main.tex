@@ -1,0 +1,83 @@
+
+\documentclass[12pt]{article}
+
+%% Mathematics
+%\usepackage{amsmath,amssymb,amsthm}
+%\usepackage{amsmath}
+
+%% Physics
+\usepackage{physics}
+
+%% Customization of captions in floating environments
+%\usepackage{caption} % for \caption*
+
+%% Citation improvement
+%\usepackage{cite}
+
+%% Hypertext marks
+\usepackage[hidelinks]{hyperref} % `hyperref` configuration must go before `orcidlink` to avoid the "Option clash for package hyperref" error.
+
+%% ORCID
+\usepackage{orcidlink} % to insert a hyperlinked ORCiD logo
+
+%% Page layout settings
+%\textwidth 160mm
+%\textheight 230mm
+%\voffset = -20mm
+
+\title{Lattice gases: Grand partition function}
+
+\author{R.V.~Romanik \orcidlink{0009-0008-2405-9038}
+	\\ \small Yukhnovskii Institute for Condensed Matter Physics, NAS of Ukraine 
+	\\ \small 1~Svientsitskii Street, 79011, Lviv, Ukraine 
+	\\ \small romanik@icmp.lviv.ua}
+
+%\date{} % to remove the date
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+		Abstract text.		
+		\\[0.5cm]
+		\textbf{Keywords:} Simple fluids, lattice gas.
+	\end{abstract}
+	
+	\tableofcontents
+	
+	\section{Introduction}
+	
+	\section{Model}
+	
+	A generic expression for the grand partition function $\Xi$ of a classical, many-particle system in equilibrium at (absolute) temperature $T$ and chemical potential $\mu$ is given by the following sum over all possible number $N$ of particles in volume $V$~\cite[Eq.~(2.4.6)]{HansenMcDonald13}: 
+	\begin{equation}
+		\Xi = \sum_{N=0}^{\infty}
+		\frac{e^{N\beta\mu}}{h^{3N} N!} \int \int \exp(-\beta \mathcal{H}) {\rm d} {\mathbf{r}}^N {\rm d} {\mathbf{p}}^N,
+	\end{equation}
+	where $\beta = 1/(k_{\mathrm B} T)$ is the inverse temperature, $k_{\mathrm B}$ being the Boltzmann constant, $h$ is the Planck constant, $\mathcal{H}$ is the Hamiltonian of the system. The integration elements are $({\rm d} \mathbf{r})^N \equiv {\rm d}{\mathbf{r}_1} \ldots {\rm d}{\mathbf{r}_N}$ for space coordinates $\mathbf{r}_i$ of $N$ particles, and $({\rm d} \mathbf{p})^N \equiv {\rm d}{\mathbf{p}_1} \ldots {\rm d}{\mathbf{p}_N}$ for momenta $\mathbf{p}_i$ of $N$ particles.
+	
+	In a similar manner to the note from \cite[p.~23]{HansenMcDonald13}, the inclusion of the factor $1/h^{3N}$ in this definition ensures that $\Xi$ is dimensionless and consistent in form with the corresponding quantity of quantum statistical mechanics, while division by $N!$ ensures that microscopic states are correctly counted.
+	
+	The dynamical state of the system of $N$ particles at any instant is completely specified by the $3N$ coordinates $\mathbf{r}^N \equiv \mathbf{r}_1, \ldots, \mathbf{r}_1$ and $3N$ momenta $\mathbf{p}^N \equiv \mathbf{p}_1, \ldots, \mathbf{p}_1$. The hamiltonian of this system is written in the form
+	\begin{equation}
+		\label{def:hamiltonian}
+		\mathcal{H}(\mathbf{r}^N, \mathbf{p}^N) = K_N(\mathbf{p}^N) + W_N(\mathbf{r}^N),
+	\end{equation}
+	where
+	\begin{equation}
+		K_N = \sum_{i=1}^{N}\frac{\abs{{\mathbf{p}_i}^2}}{2m}
+	\end{equation}
+	is the kinetic energy, $m$ being the mass of a particle, $W_N$ is the interparticle potential energy (the potential energy of interparticle interaction). Note that in Eq.~\eqref{def:hamiltonian} any additional terms due to external fields are ignored.
+	
+	\begin{equation}
+		\Xi = \sum_{N=0}^{\infty} \frac{z^N}{N!} Z_N,
+	\end{equation}
+	
+	\section{Conclusions}
+	
+	% Bibliography
+	\bibliographystyle{elsarticle-num}
+	\bibliography{articles,books}
+	
+\end{document}
