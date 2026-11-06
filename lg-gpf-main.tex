@@ -53,9 +53,9 @@
 	%\section{Introduction}
 	
 	\pagebreak
-	\section{General formulation}
+	\section{General formulation for a many-particle system in a continuum}
 	
-	Consider a classical system of identical particles of mass $m$, confined to a volume $V$, at temperature $T$ and chemical potential $\mu$. The grand partition function (GPF) is given by the following sum over all possible particle numbers $N$~\cite[Eq.~(2.4.6)]{HansenMcDonald13}: 
+	Consider a classical system of identical particles of mass $m$, confined to a macroscopic three-dimensional region $\mathcal{V} \subset \mathbb{R}^3$ of volume $V = \abs{\mathcal{V}}$, at temperature $T$ and chemical potential $\mu$. The grand partition function (GPF) is given by the following sum over all possible particle numbers $N$~\cite[Eq.~(2.4.6)]{HansenMcDonald13}: 
 	\begin{equation}
 		\label{def:gpf}
 		\Xi(T, V, \mu) = \sum_{N=0}^{\infty}
@@ -102,6 +102,29 @@
 		Z_N = \int_{V^N} \exp\left[-\beta W_{N}(\mathbf{r}^N)\right]{\rm d}\mathbf{r}^N,
 	\end{equation}
 	where the integration is performed over all configurations of $N$ particles in the volume $V$, with $Z_0 = 1$.
+	
+	It is common to assume that the interaction is pair-wise, and the potential energy of interaction can be written as
+	\begin{equation}
+		W_N(\mathbf{r}^N) = \frac{1}{2} \underset{i\neq j}{\sum_{i=1}^{N} \sum_{j = 1}^{N}} \Phi(\mathbf{r}_i, \mathbf{r}_j),
+	\end{equation}
+	where $\Phi(\mathbf{r}, \mathbf{r}')$ is the potential of interaction between a pair of particles located at $\mathbf{r}$ and $\mathbf{r}'$, respectively. The potential of interaction can, in turn, be divided into short-range and long-range parts. Conveniently, the short-range part is usually repulsive, while the long-range part is attractive~\cite{YRjps24}.
+
+	
+	\section{General formulation for lattice gas models}
+	In a lattice gas model consideration, the region $\mathcal{V}$ is partitioned into $\mathcal{N}$ non-overlapping congruent cubic cells each of volume $v = \sigma^3$, where $\sigma$ is a linear length. The volume of the whole system is thus $V = v\mathcal{N}$. The interaction potential between a pair of particles now depends not on their particular positions $\mathbf{r}$ and $\mathbf{r}'$ or on their exact relative distance $\abs{\mathbf{r} - \mathbf{r}'}$, but rather on the particular cells that the particle coordinate belongs to.
+	
+	
+	\section{Notes}
+	In this work, we want to show how one can transform the GPF for a continuous system, Eq.~\eqref{def:gpf}, to that for a lattice gas system.
+	
+	When considering lattice gas systems, many authors neglect the kinetic energy part of the Hamiltonian~\eqref{def:hamiltonian}. We however want to study the lattice gas as a coarse-grained model of classical many particle systems in the continuum. One requirement to such a model is to grasp the liquid-gas phase transition.
+	
+	For a classical, single-occupancy lattice gas, the kinetic energy was considered in~Refs.~\cite{DM18,AM24}.
+	
+	The term `lattice gas' seems to be first coined by Lee and Yang in~\cite{YL52,LY52}. However, the model was considered by Lennard-Jones and Devonshire in Refs.~\cite{LD37,LD38}.
+	
+	Other references where a transition from a continuous system to a lattice system is considered: \cite{KMV03, LSS12, PBDGC26arxiv}
+	
 	
 	%\section{Conclusions}
 	
