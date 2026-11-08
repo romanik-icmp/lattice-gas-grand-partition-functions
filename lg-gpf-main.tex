@@ -5,6 +5,7 @@
 %\usepackage{amsmath,amssymb,amsthm}
 %\usepackage{amsmath}
 \usepackage{amssymb} % \mathbb{}
+\usepackage{mathrsfs}%
 
 %% Physics
 \usepackage{physics}
@@ -22,7 +23,7 @@
 \usepackage{orcidlink} % to insert a hyperlinked ORCiD logo
 
 %% Page output manipulation
-%\usepackage[2-3]{pagesel}
+%\usepackage[4]{pagesel}
 
 %% Page layout settings
 %\textwidth 160mm
@@ -52,7 +53,7 @@
 	
 	%\section{Introduction}
 	
-	\pagebreak
+	%\pagebreak
 	\section{General formulation for a many-particle system in a continuum}
 	
 	Consider a classical system of identical particles of mass $m$, confined to a macroscopic three-dimensional region $\mathcal{V} \subset \mathbb{R}^3$ of volume $V = \abs{\mathcal{V}}$, at temperature $T$ and chemical potential $\mu$. The grand partition function (GPF) is given by the following sum over all possible particle numbers $N$~\cite[Eq.~(2.4.6)]{HansenMcDonald13}: 
@@ -99,6 +100,7 @@
 	
 	The configuration integral $Z_N$ is defined as
 	\begin{equation}
+		\label{def:confInt}
 		Z_N = \int_{V^N} \exp\left[-\beta W_{N}(\mathbf{r}^N)\right]{\rm d}\mathbf{r}^N,
 	\end{equation}
 	where the integration is performed over all configurations of $N$ particles in the volume $V$, with $Z_0 = 1$.
@@ -109,11 +111,87 @@
 	\end{equation}
 	where $\Phi(\mathbf{r}, \mathbf{r}')$ is the potential of interaction between a pair of particles located at $\mathbf{r}$ and $\mathbf{r}'$, respectively. The potential of interaction can, in turn, be divided into short-range and long-range parts. Conveniently, the short-range part is usually repulsive, while the long-range part is attractive~\cite{YRjps24}.
 
+	%\pagebreak
 	
 	\section{General formulation for lattice gas models}
-	In a lattice gas model consideration, the region $\mathcal{V}$ is partitioned into $\mathcal{N}$ non-overlapping congruent cubic cells each of volume $v = \sigma^3$, where $\sigma$ is a linear length. The volume of the whole system is thus $V = v\mathcal{N}$. The interaction potential between a pair of particles now depends not on their particular positions $\mathbf{r}$ and $\mathbf{r}'$ or on their exact relative distance $\abs{\mathbf{r} - \mathbf{r}'}$, but rather on the particular cells that the particle coordinate belongs to.
+	In a lattice gas model consideration, the region $\mathcal{V}$ is partitioned into $\mathcal{N}$ non-overlapping congruent cubic cells $\Delta_l$, $l \in \{1, 2, \ldots, \mathcal{N}\}$, each of volume $v = \sigma^3$, where $\sigma$ is a linear length. The region $\mathcal{V}$ is therefore the union of all $\Delta_l$:
+	\begin{equation}
+		\mathcal{V} = \bigcup_{l=1}^{\mathcal{N}}\Delta_l,\qquad
+		\Delta_l \cap \Delta_{l'} = \emptyset, \text{ if } l \neq l'.
+	\end{equation}
+	The volume of the whole system is thus $V = v\mathcal{N}$. 
 	
+	The interaction potential between a pair of particles now depends not on their particular positions $\mathbf{r}$ and $\mathbf{r}'$ or on their exact relative distance $\abs{\mathbf{r} - \mathbf{r}'}$, but rather on the particular cells that the particle coordinate belongs to:
+	\begin{equation}
+		\Phi(\mathbf{r}, \mathbf{r}') \to \Phi_{l, {l'}}, \text{ given } \mathbf{r} \in \Delta_{l}, \mathbf{r}' \in \Delta_{l'}.
+	\end{equation}
 	
+	\textbf{Example of a nearest-neighbor attraction.} The most commonly considered interaction potential in the theory of lattice gases is the one allowing for at most single occupancy of cells and a constant attraction between particles occupying neighboring cells: 
+	\begin{equation}
+		\Phi(\mathbf{r}_i, \mathbf{r}_j) = 
+		\begin{cases}
+			+\infty, {\text{ if } \mathbf{r}_i \in \Delta_l, \mathbf{r}_j \in \Delta_l \text{ (i.e. two particles are in the same cell), }} \\
+			-\varepsilon, \text{ if } \mathbf{r}_i \in \Delta_l, \mathbf{r}_j \in \Delta_{l'}, \text{ and } \Delta_l, \Delta_{l'} \text{ are the nearest neighbors},\\
+			0, \text{ otherwise.}
+		\end{cases}
+	\end{equation}
+	It can be expressed via the indicator function
+	\begin{equation}
+		\label{def:I}
+		\mathbb{I}_{\Delta_l} (\vb{r}) = \left\{
+		\begin{array}{ll}
+			1, \quad \vb{r} \in \Delta_l,
+			\\
+			0, \quad \vb{r} \notin \Delta_l.
+		\end{array}
+		\right.
+	\end{equation}
+	Let us define the following auxiliary functions
+	\begin{equation}
+		S(\mathbf{r}, \mathbf{r}') = \sum_{l=1}^{\mathcal{N}} \mathbb{I}_{\Delta_l}(\mathbf{r}) \mathbb{I}_{\Delta_l}(\mathbf{r}'),
+	\end{equation}
+	and
+	\begin{equation}
+		A(\mathbf{r}, \mathbf{r}') = \sum_{\langle l, l' \rangle}
+		\left[ \mathbb{I}_{\Delta_l}(\mathbf{r}) \mathbb{I}_{\Delta_{l'}}(\mathbf{r}') + \mathbb{I}_{\Delta_l}(\mathbf{r}') \mathbb{I}_{\Delta_{l'}}(\mathbf{r}) \right],
+	\end{equation}
+	where $\langle l, l' \rangle$ denotes an unordered pair of nearest-neighboring cells, counted once. Since every position belongs to exactly one cell, $S=1$ if the two particles are in the same cell and $S=0$ otherwise. Likewise, $A=1$ if their cells are nearest neighbors and $A=0$ otherwise.
+	In terms of these functions, the interaction potential $\Phi$ becomes
+	\begin{equation}
+		\Phi(\mathbf{r}_i, \mathbf{r}_j) = 
+		\begin{cases}
+			+\infty, \quad S(\mathbf{r}_i, \mathbf{r}_j) = 1,\\
+			-\varepsilon A(\mathbf{r}_i, \mathbf{r}_j), \quad S(\mathbf{r}_i, \mathbf{r}_j) = 0,
+		\end{cases}
+	\end{equation}
+	or even can be written as a limit
+	\begin{equation}
+		\Phi(\mathbf{r}_i, \mathbf{r}_j) = \lim\limits_{K \to \infty} 
+		\left[ K S(\mathbf{r}_i, \mathbf{r}_j) - \varepsilon A(\mathbf{r}_i, \mathbf{r}_j) \right].
+	\end{equation}
+	
+	A yet another representation is in terms of occupation numbers $n_l$, which is the number of particles occupying a cell $\Delta_{l}$:
+	\begin{equation}
+		n_l = \sum_{i = 1}^N \mathbb{I}_{\Delta_{l}}(\mathbf{r}_i).
+	\end{equation}
+	If multiple occupancy is forbidden, then $n_l \in \{0, 1\}$, and 
+	\begin{equation}
+		\Phi(\mathbf{r}_i, \mathbf{r}_j) = -\varepsilon \sum_{\langle l, l'\rangle} n_l n_{l'}.
+	\end{equation}
+	
+	In general, we can write the grand partition function for a lattice gas with unrestricted occupancy as
+	\begin{eqnarray}
+		\label{eq:Xi_lg}
+		\Xi & = & \sum_{n_1 = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_1} \frac{{\rm e}^{\beta\mu n_1}}{n_1!} \ldots \sum_{n_{\mathcal{N}} = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_{\mathcal{N}}} \frac{{\rm e}^{\beta\mu n_{\mathcal{N}}}}{n_{\mathcal{N}}!} {\rm e}^{-\beta\mathcal{H}}.
+	\end{eqnarray}
+	
+	A fundamental question arises whether a strict mathematical transformation is possible from the GPF represented in continuous coordinates, Eqs.~\eqref{def:gpf}--\eqref{def:confInt}, to the lattice gas representation~\eqref{eq:Xi_lg}. 
+	
+	One thing that seems to be obvious is that it is possible only if the interaction potential is discretized, i.e. the interaction depends on the cells where particles belong, but not on their precise coordinates. One striking example is an unrestricted occupancy model with the so-called Curie-Weiss interaction. The next section shows this transformation in details, based on the method of Ref.~\cite{KKD20}. Then we also consider the case of non-interacting particles for different maximum occupancies. We leave the question of a general case of generic discretised potential and of an arbitrary occupancy open.
+
+	\section{Lattice gas with unrestricted occupancy and the Curie-Weiss interaction}
+	
+	%\pagebreak
 	\section{Notes}
 	In this work, we want to show how one can transform the GPF for a continuous system, Eq.~\eqref{def:gpf}, to that for a lattice gas system.
 	
@@ -124,6 +202,8 @@
 	The term `lattice gas' seems to be first coined by Lee and Yang in~\cite{YL52,LY52}. However, the model was considered by Lennard-Jones and Devonshire in Refs.~\cite{LD37,LD38}.
 	
 	Other references where a transition from a continuous system to a lattice system is considered: \cite{KMV03, LSS12, PBDGC26arxiv}
+	
+	Worth attention is Ref.~\cite{RB60}, where a cell model is considered in the grand canonical ensemble.
 	
 	
 	%\section{Conclusions}
