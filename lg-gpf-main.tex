@@ -247,6 +247,10 @@
 		& = & \sum_{n_1 = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_1} \frac{{\rm e}^{\beta\mu n_1}}{n_1!} \ldots \sum_{n_{\mathcal{N}} = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_{\mathcal{N}}} \frac{{\rm e}^{\beta\mu n_{\mathcal{N}}}}{n_{\mathcal{N}}!} {\rm e}^{-\beta U(\mathbf{n})}.
 	\end{eqnarray}
 	
+	The obtained expression establishes an exact correspondence between the continuum grand partition function and its occupation-number representation for a system with cellwise-constant interactions. In particular, the factors $1/n_l!$ arise naturally from the combination of the Gibbs factor $1/N!$ and the multinomial counting of particle-coordinate assignments to cells. Thus, no additional statistical weights or approximations are introduced in the transformation.
+	
+	The resulting grand partition function describes a lattice gas with unrestricted cell occupancy, $n_l \in \mathbb{N}_0$, and the interaction energy $U(\mathbf{n})$. The transformation is exact for the considered class of of cellwise-constant potentials, irrespective of the range of interactions between cells or the form of the corresponding coupling coefficients $\Phi_{l, {l'}}$.
+	
 	
 	
 	\subsection{Draft}
@@ -307,6 +311,19 @@
 	A fundamental question arises whether a strict mathematical transformation is possible from the GPF represented in continuous coordinates, Eqs.~\eqref{def:gpf}--\eqref{def:confInt}, to the lattice gas representation~\eqref{eq:Xi_lg}. 
 	
 	One thing that seems to be obvious is that it is possible only if the interaction potential is discretized, i.e. the interaction depends on the cells where particles belong, but not on their precise coordinates. One striking example is an unrestricted occupancy model with the so-called Curie-Weiss interaction. The next section shows this transformation in details, based on the method of Ref.~\cite{KKD20}. Then we also consider the case of non-interacting particles for different maximum occupancies. We leave the question of a general case of generic discretised potential and of an arbitrary occupancy open.
+	
+	Compact form:
+	\begin{equation}
+		\boxed{
+			\Xi=
+			\sum_{\mathbf n\in\mathbb N_0^{\mathcal N}}
+			\left[
+			\prod_{l=1}^{\mathcal N}
+			\frac{z^{n_l}}{n_l!}
+			\right]
+			\exp[-\beta U(\mathbf n)].
+		}
+	\end{equation}
 
 	\pagebreak
 	\section{Lattice gas with unrestricted occupancy and the Curie-Weiss interaction}
