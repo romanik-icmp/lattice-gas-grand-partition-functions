@@ -225,7 +225,7 @@
 	\end{equation}
 	Substituting this expression into the grand partition function, we obtain
 	\begin{equation}
-		\Xi=
+		\Xi(T, V, \mu) =
 		\sum_{N=0}^{\infty}
 		\frac{\zeta^N}{N!}
 		\sum_{\substack{n_1,\ldots,n_{\mathcal N}=0\\
@@ -235,7 +235,8 @@
 	\end{equation}
 	The factor $N!$ in the multinomial coefficient cancels the Gibbs factor $1/N!$ originating from the continuum partition function~\eqref{def:gpf}. Moreover, due to Eq.~\eqref{nlSum}, the summation over particle numbers $N$, together with the constrained summation over occupation vectors, can be replaced by an unrestricted summation over all nonnegative occupation numbers. We thus arrive at
 	\begin{eqnarray}
-		\Xi & = & 
+		\label{eq:Xi_lg}
+		\Xi(T, \mathcal{N}, \mu) & = & 
 		\sum_{n_1=0}^{\infty}\cdots
 		\sum_{n_{\mathcal N}=0}^{\infty}
 		\left[
@@ -246,36 +247,27 @@
 		\nonumber\\
 		& = & \sum_{n_1 = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_1} \frac{{\rm e}^{\beta\mu n_1}}{n_1!} \ldots \sum_{n_{\mathcal{N}} = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_{\mathcal{N}}} \frac{{\rm e}^{\beta\mu n_{\mathcal{N}}}}{n_{\mathcal{N}}!} {\rm e}^{-\beta U(\mathbf{n})}.
 	\end{eqnarray}
+	Since $V$ is proportional to $\mathcal{N}$, we have replaced $V$ with $\mathcal{N}$ in the list of parameters of $\Xi$.
 	
 	The obtained expression establishes an exact correspondence between the continuum grand partition function and its occupation-number representation for a system with cellwise-constant interactions. In particular, the factors $1/n_l!$ arise naturally from the combination of the Gibbs factor $1/N!$ and the multinomial counting of particle-coordinate assignments to cells. Thus, no additional statistical weights or approximations are introduced in the transformation.
 	
 	The resulting grand partition function describes a lattice gas with unrestricted cell occupancy, $n_l \in \mathbb{N}_0$, and the interaction energy $U(\mathbf{n})$. The transformation is exact for the considered class of of cellwise-constant potentials, irrespective of the range of interactions between cells or the form of the corresponding coupling coefficients $\Phi_{l, {l'}}$.
 	
+	Next, we will proceed with a few examples. First, the single-occupancy lattice gas with nearest-neighbor attraction will be considered. Second, an unrestricted occupancy model with the so-called Curie-Weiss interaction will be studied. For the Curie-Weiss interaction, the method of Ref.~\cite{KKD20} will be also closely revisited. Finally, we consider the case of non-interacting particles for different maximum occupancies.
 	
-	
-	\subsection{Draft}
-	
-	\textbf{Example of a nearest-neighbor attraction.} The most commonly considered interaction potential in the theory of lattice gases is the one allowing for at most single occupancy of cells and a constant attraction between particles occupying neighboring cells: 
+	\subsection{Nearest-neighbor attraction and single-occupancy lattice gas}
+	As an example, consider a lattice gas with repulsive interactions between particles occupying the same cell and attractive interactions between particles occupying nearest-neighbor cells. The corresponding interaction coefficients $\Phi_{l, {l'}}$ are defined as
 	\begin{equation}
-		\Phi(\mathbf{r}_i, \mathbf{r}_j) = 
+		\Phi_{l, {l'}} = 
 		\begin{cases}
-			+\infty, {\text{ if } \mathbf{r}_i \in \Delta_l, \mathbf{r}_j \in \Delta_l \text{ (i.e. two particles are in the same cell), }} \\
-			-\varepsilon, \text{ if } \mathbf{r}_i \in \Delta_l, \mathbf{r}_j \in \Delta_{l'}, \text{ and } \Delta_l, \Delta_{l'} \text{ are the nearest neighbors},\\
-			0, \text{ otherwise.}
+			J, & l = l',\\
+			-\varepsilon, & \langle l, l' \rangle, \\
+			0, & \text{otherwise},
 		\end{cases}
 	\end{equation}
-	It can be expressed via the indicator function
-	\begin{equation}
-		\label{def:I2}
-		\mathbb{I}_{\Delta_l} (\vb{r}) = \left\{
-		\begin{array}{ll}
-			1, \quad \vb{r} \in \Delta_l,
-			\\
-			0, \quad \vb{r} \notin \Delta_l.
-		\end{array}
-		\right.
-	\end{equation}
-	Let us define the following auxiliary functions
+	where $J \geq 0$ is the strength of the repulsion between particles occupying the same cell, $\varepsilon > 0$ is the strength of the nearest-neighbor attraction, and $\langle l, l' \rangle$ denotes a pair of nearest-neighboring cells.
+	
+	To express the corresponding pair potential in terms of the cell indicator functions, let us introduce the auxiliary functions
 	\begin{equation}
 		S(\mathbf{r}, \mathbf{r}') = \sum_{l=1}^{\mathcal{N}} \mathbb{I}_{\Delta_l}(\mathbf{r}) \mathbb{I}_{\Delta_l}(\mathbf{r}'),
 	\end{equation}
@@ -284,52 +276,52 @@
 		A(\mathbf{r}, \mathbf{r}') = \sum_{\langle l, l' \rangle}
 		\left[ \mathbb{I}_{\Delta_l}(\mathbf{r}) \mathbb{I}_{\Delta_{l'}}(\mathbf{r}') + \mathbb{I}_{\Delta_l}(\mathbf{r}') \mathbb{I}_{\Delta_{l'}}(\mathbf{r}) \right],
 	\end{equation}
-	where $\langle l, l' \rangle$ denotes an unordered pair of nearest-neighboring cells, counted once. Since every position belongs to exactly one cell, $S=1$ if the two particles are in the same cell and $S=0$ otherwise. Likewise, $A=1$ if their cells are nearest neighbors and $A=0$ otherwise.
-	In terms of these functions, the interaction potential $\Phi$ becomes
-	\begin{equation}
-		\Phi(\mathbf{r}_i, \mathbf{r}_j) = 
-		\begin{cases}
-			+\infty, \quad S(\mathbf{r}_i, \mathbf{r}_j) = 1,\\
-			-\varepsilon A(\mathbf{r}_i, \mathbf{r}_j), \quad S(\mathbf{r}_i, \mathbf{r}_j) = 0,
-		\end{cases}
-	\end{equation}
-	or even can be written as a limit
-	\begin{equation}
-		\Phi(\mathbf{r}_i, \mathbf{r}_j) = \lim\limits_{K \to \infty} 
-		\left[ K S(\mathbf{r}_i, \mathbf{r}_j) - \varepsilon A(\mathbf{r}_i, \mathbf{r}_j) \right].
-	\end{equation}
+	where the summation in the latter expression runs over all unordered pairs of nearest-neighboring cells, each counted once.
 	
-	A yet another representation is in terms of occupation numbers $n_l$, which is the number of particles occupying a cell $\Delta_{l}$:
+	Since each particle belongs to exactly one cell, $S(\mathbf{r}, \mathbf{r}') = 1$ if both particles occupy the same cell and $S=0$ otherwise. Similarly, $A(\mathbf{r}, \mathbf{r}') = 1$ if the particles occupy nearest-neighboring cells and vanishes otherwise. In particular, these functions satisfy
 	\begin{equation}
-		n_l = \sum_{i = 1}^N \mathbb{I}_{\Delta_{l}}(\mathbf{r}_i).
+		S(\mathbf{r}, \mathbf{r}') A(\mathbf{r}, \mathbf{r}') = 0.
 	\end{equation}
-	If multiple occupancy is forbidden, then $n_l \in \{0, 1\}$, and 
+	The pair interaction potential can therefore be written as
 	\begin{equation}
-		W_N(\mathbf{r}^N) = -\varepsilon \sum_{\langle l, l'\rangle} n_l n_{l'}.
+		\Phi(\mathbf{r}, \mathbf{r}') = J S(\mathbf{r}, \mathbf{r}') - \varepsilon A(\mathbf{r}, \mathbf{r}').
 	\end{equation}
-	
-	A fundamental question arises whether a strict mathematical transformation is possible from the GPF represented in continuous coordinates, Eqs.~\eqref{def:gpf}--\eqref{def:confInt}, to the lattice gas representation~\eqref{eq:Xi_lg}. 
-	
-	One thing that seems to be obvious is that it is possible only if the interaction potential is discretized, i.e. the interaction depends on the cells where particles belong, but not on their precise coordinates. One striking example is an unrestricted occupancy model with the so-called Curie-Weiss interaction. The next section shows this transformation in details, based on the method of Ref.~\cite{KKD20}. Then we also consider the case of non-interacting particles for different maximum occupancies. We leave the question of a general case of generic discretised potential and of an arbitrary occupancy open.
-	
-	Compact form:
+	Substituting this expression into the definition of the total potential energy, Eq.~\eqref{potEnergy}, yields
 	\begin{equation}
-		\boxed{
-			\Xi=
-			\sum_{\mathbf n\in\mathbb N_0^{\mathcal N}}
-			\left[
-			\prod_{l=1}^{\mathcal N}
-			\frac{z^{n_l}}{n_l!}
-			\right]
-			\exp[-\beta U(\mathbf n)].
-		}
+		W_N(\mathbf{r}^N) = J \sum_{i < j} S(\mathbf{r}, \mathbf{r}') - \varepsilon \sum_{i < j} A(\mathbf{r}, \mathbf{r}').
 	\end{equation}
+	Taking into account the definitions of the occupation numbers, we obtain
+	\begin{equation}
+		\sum_{i < j} S(\mathbf{r}, \mathbf{r}') = \frac{1}{2} \sum_{l=1}^{\mathcal{N}} n_l (n_l - 1)
+	\end{equation}
+	and 
+	\begin{equation}
+		\sum_{i < j} A(\mathbf{r}, \mathbf{r}') = \sum_{\langle l, l' \rangle} n_l n_{l'}.
+	\end{equation}
+	Consequently, the total potential energy takes the form
+	\begin{equation}
+		U(\mathbf{n}) = \frac{J}{2} \sum_{l=1}^{\mathcal{N}} n_l (n_l - 1) - \varepsilon \sum_{\langle l, l' \rangle} n_l n_{l'}.
+	\end{equation}
+	The first term describes the repulsion between distinct particles occupying the same cell, while the second accounts for the attraction between particles occupying nearest-neighboring cells.
+	
+	The conventional single-occupancy lattice gas is recovered in the limit $J \to \infty$. In this limit, the Boltzmann factor vanishes for any configuration containing a cell with $n_l \geq 2$. Therefore, only configurations satisfying
+	\begin{equation}
+		n_l \in \{0, 1\}, \quad l = 1, \ldots, \mathcal{N},
+	\end{equation}
+	contribute to the grand partition function. For such configurations, the repulsive term vanishes, and the potential energy reduces to 
+	\begin{equation}
+		U(\mathbf{n}) = -\varepsilon \sum_{\langle l, l' \rangle} n_l n_{l'}.
+	\end{equation}
+	Substituting this expression into the general lattice-gas GPF derived above, Eq.~\eqref{eq:Xi_lg}, and taking into account that $n_l!=1$ for $n_l \in \{0, 1\}$, we obtain
+	\begin{equation}
+		\Xi = \sum_{n_1 = 0}^1 \left(\frac{v}{\Lambda^3}\right)^{n_1} {\rm e}^{\beta\mu n_1} \ldots \sum_{n_{\mathcal{N}} = 0}^1 \left(\frac{v}{\Lambda^3}\right)^{n_{\mathcal{N}}} {\rm e}^{\beta\mu n_{\mathcal{N}}} \exp({\beta \varepsilon \sum_{\langle l, l' \rangle} n_l n_{l'}}).
+	\end{equation}
+	This is the grand partition function of the conventional lattice gas with nearest-neighbor attraction and single-site occupancy. Thus, the single-occupancy constraint can be implemented through an infinitely strong repulsive interaction between particles occupying the same cell, while the attractive interaction between particles in neighboring cells retains its finite strength.
 
-	\pagebreak
-	\section{Lattice gas with unrestricted occupancy and the Curie-Weiss interaction}
+	\subsection{Lattice gas with unrestricted occupancy and the Curie-Weiss interaction}
 	
-	
-	
+	\subsection{Lattice gases of non-interacting particles}
+
 	
 	%\section{Conclusions}
 	
@@ -352,3 +344,16 @@ The term `lattice gas' seems to be first coined by Lee and Yang in~\cite{YL52,LY
 Other references where a transition from a continuous system to a lattice system is considered: \cite{KMV03, LSS12, PBDGC26arxiv}
 
 Worth attention is Ref.~\cite{RB60}, where a cell model is considered in the grand canonical ensemble.
+
+	Compact form:
+\begin{equation}
+	\boxed{
+		\Xi=
+		\sum_{\mathbf n\in\mathbb N_0^{\mathcal N}}
+		\left[
+		\prod_{l=1}^{\mathcal N}
+		\frac{z^{n_l}}{n_l!}
+		\right]
+		\exp[-\beta U(\mathbf n)].
+	}
+\end{equation}
