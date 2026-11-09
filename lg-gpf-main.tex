@@ -3,7 +3,7 @@
 
 %% Mathematics
 %\usepackage{amsmath,amssymb,amsthm}
-%\usepackage{amsmath}
+\usepackage{amsmath}
 \usepackage{amssymb} % \mathbb{}
 \usepackage{mathrsfs}%
 
@@ -82,9 +82,9 @@
 	\begin{equation}
 		K_N(\mathbf{p}^N) = \sum_{i=1}^{N}\frac{\abs{{\mathbf{p}_i}}^2}{2m}
 	\end{equation}
-	is the kinetic energy and $W_N(\mathbf{r}^N)$ is the interparticle potential energy (the potential energy of interparticle interaction).
+	is the kinetic energy and $W_N(\mathbf{r}^N)$ is the total interparticle potential energy.
 	
-	Since the kinetic energy is quadratic in the momenta, the momentum integrations in Eq.~\eqref{def:gpf} can be evaluated analytically. Each momentum component contributes a factor $(2\pi m k_{\mathrm{B}} T)^{1/2}$. The GPF is therefore takes the form	
+	Since the kinetic energy is quadratic in the momenta, the momentum integrations in Eq.~\eqref{def:gpf} can be evaluated analytically. Each momentum component contributes a factor $(2\pi m k_{\mathrm{B}} T)^{1/2}$. The GPF therefore takes the form	
 	\begin{equation}
 		\Xi(T, V, \mu) = \sum_{N=0}^{\infty} \frac{\zeta^N}{N!} Z_N,
 	\end{equation}
@@ -107,24 +107,149 @@
 	
 	It is common to assume that the interaction is pair-wise, and the potential energy of interaction can be written as
 	\begin{equation}
+		\label{potEnergy}
 		W_N(\mathbf{r}^N) = \frac{1}{2} \underset{i\neq j}{\sum_{i=1}^{N} \sum_{j = 1}^{N}} \Phi(\mathbf{r}_i, \mathbf{r}_j),
 	\end{equation}
 	where $\Phi(\mathbf{r}, \mathbf{r}')$ is the potential of interaction between a pair of particles located at $\mathbf{r}$ and $\mathbf{r}'$, respectively. The potential of interaction can, in turn, be divided into short-range and long-range parts. Conveniently, the short-range part is usually repulsive, while the long-range part is attractive~\cite{YRjps24}.
 
-	%\pagebreak
+	\pagebreak
 	
 	\section{General formulation for lattice gas models}
-	In a lattice gas model consideration, the region $\mathcal{V}$ is partitioned into $\mathcal{N}$ non-overlapping congruent cubic cells $\Delta_l$, $l \in \{1, 2, \ldots, \mathcal{N}\}$, each of volume $v = \sigma^3$, where $\sigma$ is a linear length. The region $\mathcal{V}$ is therefore the union of all $\Delta_l$:
+	Consider a partition of the region $\mathcal{V}$ into $\mathcal{N}$ non-overlapping congruent cubic cells $\Delta_l$, $l \in \{1, 2, \ldots, \mathcal{N}\}$, each of volume $v = \sigma^3$, where $\sigma$ is the cell edge length. We assume that the region $\mathcal{V}$ admits such a partition and is therefore the union of all $\Delta_l$:
 	\begin{equation}
 		\mathcal{V} = \bigcup_{l=1}^{\mathcal{N}}\Delta_l,\qquad
-		\Delta_l \cap \Delta_{l'} = \emptyset, \text{ if } l \neq l'.
+		\Delta_l \cap \Delta_{l'} = \emptyset \quad (l \neq l'),
 	\end{equation}
-	The volume of the whole system is thus $V = v\mathcal{N}$. 
+	where the cells are understood to be disjoint apart from possible common boundaries of zero measure. The volume of the whole system is thus $V = v\mathcal{N}$. 
 	
-	The interaction potential between a pair of particles now depends not on their particular positions $\mathbf{r}$ and $\mathbf{r}'$ or on their exact relative distance $\abs{\mathbf{r} - \mathbf{r}'}$, but rather on the particular cells that the particle coordinate belongs to:
+	To describe the distribution of particles among the cells, we introduce the indicator function
 	\begin{equation}
-		\Phi(\mathbf{r}, \mathbf{r}') \to \Phi_{l, {l'}}, \text{ given } \mathbf{r} \in \Delta_{l}, \mathbf{r}' \in \Delta_{l'}.
+		\label{def:I}
+		\mathbb{I}_{\Delta_l} (\vb{r}) = \left\{
+		\begin{array}{ll}
+			1, \quad \vb{r} \in \Delta_l,
+			\\
+			0, \quad \vb{r} \notin \Delta_l.
+		\end{array}
+		\right.
 	\end{equation}
+	Since each position $\mathbf{r} \in \mathcal{V}$ belongs to exactly one cell, the indicator functions satisfy the identity
+	\begin{equation}
+		\sum_{l=1}^{\mathcal{N}} \mathbb{I}_{\Delta_{l}}(\mathbf{r}) = 1.
+	\end{equation}
+	
+	The occupation number $n_l$, defined as the number of particles in cell $\Delta_{l}$, can be expressed in terms of the indicator functions as
+	\begin{equation}
+		\label{def:occN}
+		n_l = \sum_{i=1}^{N} \mathbb{I}_{\Delta_{l}}(\mathbf{r}_i),
+	\end{equation}
+	where $N$ is the total number of particles. Consequently,
+	\begin{equation}
+		\label{nlSum}
+		\sum_{l=1}^{\mathcal{N}} n_l = N.
+	\end{equation}
+	In general, the occupation numbers are nonnegative integers, $n_l \in \mathbb{N}_0$. Depending on the model, they may be unrestricted or subject to a maximum occupancy. In particular, the conventional single-occupancy lattice gas corresponds to $n\in \{0, 1\}$.
+	
+	We now consider a class of interaction potentials for which the interaction between two particles depends only on the cells they occupy, rather than on their precise positions within those cells. Such a potential is constant for each pair of cells and can be represented as
+	\begin{equation}
+		\label{cellInt}
+		\Phi(\mathbf{r}, \mathbf{r}') = \sum_{l=1}^{\mathcal{N}} \sum_{l'=1}^{\mathcal{N}} \Phi_{l, {l'}} \mathbb{I}_{\Delta_{l}}(\mathbf{r}) \mathbb{I}_{\Delta_{l'}}(\mathbf{r}'),
+	\end{equation}
+	where $\Phi_{l, {l'}} = \Phi_{{l'}, {l}}$ is the interaction energy between two distinct particles occupying cells $\Delta_{l}$ and $\Delta_{l'}$, respectively. In particular, $\Phi_{ll}$ describes the interaction between two particles occupying the same cell.
+	
+	It should be emphasized that the partition of the region $\mathcal{V}$ into cells does not, by itself, imply that the interaction potential is constant within each pair of cells. The above representation is exact for a cellwise-constant interaction potential. For a general continuum potential, replacing its coordinate dependence by a set of cell-dependent values $\Phi_{l, {l'}}$ constitutes an additional approximation or model assumption.
+	
+	Substituting the cellwise-constant potential~\eqref{cellInt} into Eq.~\eqref{potEnergy}, we obtain the total potential energy
+	\begin{eqnarray}
+		W_N(\mathbf{r}^N) & = & \frac{1}{2} \underset{i\neq j}{\sum_{i=1}^{N} \sum_{j = 1}^{N}} \Phi(\mathbf{r}_i, \mathbf{r}_j)
+		\nonumber\\
+		& = & \frac{1}{2} \sum_{l,l' = 1}^{\mathcal{N}} \Phi_{l, {l'}} \sum_{\substack{i,j=1 \\ i \ne j}}^{N} \mathbb{I}_{\Delta_{l}}(\mathbf{r}_i) \mathbb{I}_{\Delta_{l'}}(\mathbf{r}_j).
+	\end{eqnarray}
+	Taking into account the definition of the occupation numbers~\eqref{def:occN}, the inner sum can be rewritten as
+	\begin{eqnarray}
+		\sum_{\substack{i,j=1 \\ i \ne j}}^{N} && \mathbb{I}_{\Delta_{l}}(\mathbf{r}_i) \mathbb{I}_{\Delta_{l'}}(\mathbf{r}_j) = 
+		\nonumber \\
+		&& = \sum_{i,j=1}^{N} \mathbb{I}_{\Delta_{l}}(\mathbf{r}_i) \mathbb{I}_{\Delta_{l'}}(\mathbf{r}_j) - \sum_{i=1}^N \mathbb{I}_{\Delta_{l}}(\mathbf{r}_i) \mathbb{I}_{\Delta_{l'}}(\mathbf{r}_i)
+		\nonumber\\
+		&& = n_l n_{l'} - \delta_{ll'} n_l,
+	\end{eqnarray}
+	where $\delta_{ll'}$ is the Kronecker delta symbol. In the last equality, we used the fact that the product $\mathbb{I}_{\Delta_{l}}(\mathbf{r}) \mathbb{I}_{\Delta_{l'}}(\mathbf{r})$ vanishes for $l \ne l'$, while for $l=l'$ it equals $\mathbb{I}_{\Delta_{l}}(\mathbf{r})$.
+	
+	Thus, the potential energy takes the form
+	\begin{equation}
+		W_N(\mathbf{r}^N) = \frac{1}{2} \sum_{l,l' = 1}^{\mathcal{N}} \Phi_{l, {l'}} (n_l n_{l'} - \delta_{ll'} n_l).
+	\end{equation}
+	Equivalently, separating the contributions from particles occupying the same cell and those occupying different cells, we obtain
+	\begin{equation}
+		W_N(\mathbf{r}^N) = \frac{1}{2} \sum_{l=1}^{\mathcal{N}} \Phi_{ll} n_l (n_l - 1) + \frac{1}{2} \sum_{\substack{l,l'=1 \\ l \ne l'}}^{\mathcal{N}} \Phi_{l, {l'}} n_l n_{l'}.
+	\end{equation}
+	The first term represents interactions between distinct particles occupying the same cell, while the second accounts for interactions between particles occupying different cells. The factor $n_l (n_l - 1)$ in the first term ensures that self-interactions are excluded, consistently with the original definition of the potential energy in Eq.~\eqref{potEnergy}.
+	
+	An important consequence of this representation is that the total potential energy depends on the particle coordinates only through the cell occupation numbers. Therefore, it can be written as
+	\begin{equation}
+		W_N(\mathbf{r}^N) = U(\mathbf{n}), \quad \mathbf{n} = (n_1, \ldots, n_{\mathcal{N}}),
+	\end{equation}
+	where
+	\begin{equation}
+		U(\mathbf{n}) = \frac{1}{2} \sum_{l,l' = 1}^{\mathcal{N}} \Phi_{l, {l'}} (n_l n_{l'} - \delta_{ll'} n_l).
+	\end{equation}
+	This result establishes a direct correspondence between a system of particles interacting through a cellwise-constant pair potential and a lattice model formulated in terms of occupation numbers. In particular, the interaction energy is completely determined by the occupation vector $\mathbf{n}$, irrespective of the precise positions of the particles within their cells. This property allows the configuration integrals~\eqref{def:confInt} in the grand partition function to be evaluated explicitly in terms of the cell volumes, leading to a representation involving sums over occupation numbers.
+	
+	The dependence of the potential energy exclusively on the cell occupation numbers makes it possible to transform the continuum grand partition function into a sum over occupation-number configurations. Since $W_N(\mathbf r^N)=U(\mathbf{n})$, the integrand in Eq.~\eqref{def:confInt} depends on the particle coordinates only through the occupation vector $\mathbf{n}$. Consequently, the configuration integral can be evaluated by grouping particle configurations according to their occupation numbers.
+	
+	Consider an occupation vector $\mathbf{n}$ satisfying the constraint~\eqref{nlSum}. The number of distinct assignments of the $N$ particle-coordinate integration variables to the $\mathcal{N}$ cells, with exactly $n_l$ coordinates belonging to cell $\Delta_l$, is given by the multinomial coefficient
+	\begin{equation}
+		\frac{N!}{n_1!\cdots n_{\mathcal{N}}!}.
+	\end{equation}
+	For each such assignment, the interaction energy is constant and equal to $U(\mathbf{n})$. Therefore, the integration over particle coordinates yields
+	\begin{equation}
+			\begin{aligned}
+			&\int_{\Delta_1^{n_1}\times\cdots\times
+				\Delta_{\mathcal N}^{n_{\mathcal N}}}
+			\exp[-\beta U(\mathbf n)] {\rm d} {\mathbf{r}}^N\\
+			&\qquad =
+			\exp[-\beta U(\mathbf n)]
+			\prod_{l=1}^{\mathcal N}
+			\left(\int_{\Delta_l}d^3r\right)^{n_l}\\
+			&\qquad =
+			v^N\exp[-\beta U(\mathbf n)],
+		\end{aligned}
+	\end{equation}
+	Taking into account all possible occupation vectors and their corresponding multinomial factors, the configuration integral $Z_N$ becomes 
+	\begin{equation}
+		Z_N=
+		\sum_{\substack{n_1,\ldots,n_{\mathcal N}=0\\
+			n_1+\cdots+n_{\mathcal N}=N}}^{\infty}
+		\frac{N!}{n_1!\cdots n_{\mathcal N}!}
+		v^N\exp[-\beta U(\mathbf n)].
+	\end{equation}
+	Substituting this expression into the grand partition function, we obtain
+	\begin{equation}
+		\Xi=
+		\sum_{N=0}^{\infty}
+		\frac{\zeta^N}{N!}
+		\sum_{\substack{n_1,\ldots,n_{\mathcal N}=0\\
+				n_1+\cdots+n_{\mathcal N}=N}}^{\infty}
+		\frac{N!}{n_1!\cdots n_{\mathcal N}!}
+		v^N\exp[-\beta U(\mathbf n)].
+	\end{equation}
+	The factor $N!$ in the multinomial coefficient cancels the Gibbs factor $1/N!$ originating from the continuum partition function~\eqref{def:gpf}. Moreover, due to Eq.~\eqref{nlSum}, the summation over particle numbers $N$, together with the constrained summation over occupation vectors, can be replaced by an unrestricted summation over all nonnegative occupation numbers. We thus arrive at
+	\begin{eqnarray}
+		\Xi & = & 
+		\sum_{n_1=0}^{\infty}\cdots
+		\sum_{n_{\mathcal N}=0}^{\infty}
+		\left[
+			\prod_{l=1}^{\mathcal N}
+			\frac{(\zeta v)^{n_l}}{n_l!}
+		\right]
+		\exp[-\beta U(\mathbf n)].
+		\nonumber\\
+		& = & \sum_{n_1 = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_1} \frac{{\rm e}^{\beta\mu n_1}}{n_1!} \ldots \sum_{n_{\mathcal{N}} = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_{\mathcal{N}}} \frac{{\rm e}^{\beta\mu n_{\mathcal{N}}}}{n_{\mathcal{N}}!} {\rm e}^{-\beta U(\mathbf{n})}.
+	\end{eqnarray}
+	
+	
+	
+	\subsection{Draft}
 	
 	\textbf{Example of a nearest-neighbor attraction.} The most commonly considered interaction potential in the theory of lattice gases is the one allowing for at most single occupancy of cells and a constant attraction between particles occupying neighboring cells: 
 	\begin{equation}
@@ -137,7 +262,7 @@
 	\end{equation}
 	It can be expressed via the indicator function
 	\begin{equation}
-		\label{def:I}
+		\label{def:I2}
 		\mathbb{I}_{\Delta_l} (\vb{r}) = \left\{
 		\begin{array}{ll}
 			1, \quad \vb{r} \in \Delta_l,
@@ -176,34 +301,17 @@
 	\end{equation}
 	If multiple occupancy is forbidden, then $n_l \in \{0, 1\}$, and 
 	\begin{equation}
-		\Phi(\mathbf{r}_i, \mathbf{r}_j) = -\varepsilon \sum_{\langle l, l'\rangle} n_l n_{l'}.
+		W_N(\mathbf{r}^N) = -\varepsilon \sum_{\langle l, l'\rangle} n_l n_{l'}.
 	\end{equation}
-	
-	In general, we can write the grand partition function for a lattice gas with unrestricted occupancy as
-	\begin{eqnarray}
-		\label{eq:Xi_lg}
-		\Xi & = & \sum_{n_1 = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_1} \frac{{\rm e}^{\beta\mu n_1}}{n_1!} \ldots \sum_{n_{\mathcal{N}} = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_{\mathcal{N}}} \frac{{\rm e}^{\beta\mu n_{\mathcal{N}}}}{n_{\mathcal{N}}!} {\rm e}^{-\beta\mathcal{H}}.
-	\end{eqnarray}
 	
 	A fundamental question arises whether a strict mathematical transformation is possible from the GPF represented in continuous coordinates, Eqs.~\eqref{def:gpf}--\eqref{def:confInt}, to the lattice gas representation~\eqref{eq:Xi_lg}. 
 	
 	One thing that seems to be obvious is that it is possible only if the interaction potential is discretized, i.e. the interaction depends on the cells where particles belong, but not on their precise coordinates. One striking example is an unrestricted occupancy model with the so-called Curie-Weiss interaction. The next section shows this transformation in details, based on the method of Ref.~\cite{KKD20}. Then we also consider the case of non-interacting particles for different maximum occupancies. We leave the question of a general case of generic discretised potential and of an arbitrary occupancy open.
 
+	\pagebreak
 	\section{Lattice gas with unrestricted occupancy and the Curie-Weiss interaction}
 	
-	%\pagebreak
-	\section{Notes}
-	In this work, we want to show how one can transform the GPF for a continuous system, Eq.~\eqref{def:gpf}, to that for a lattice gas system.
 	
-	When considering lattice gas systems, many authors neglect the kinetic energy part of the Hamiltonian~\eqref{def:hamiltonian}. We however want to study the lattice gas as a coarse-grained model of classical many particle systems in the continuum. One requirement to such a model is to grasp the liquid-gas phase transition.
-	
-	For a classical, single-occupancy lattice gas, the kinetic energy was considered in~Refs.~\cite{DM18,AM24}.
-	
-	The term `lattice gas' seems to be first coined by Lee and Yang in~\cite{YL52,LY52}. However, the model was considered by Lennard-Jones and Devonshire in Refs.~\cite{LD37,LD38}.
-	
-	Other references where a transition from a continuous system to a lattice system is considered: \cite{KMV03, LSS12, PBDGC26arxiv}
-	
-	Worth attention is Ref.~\cite{RB60}, where a cell model is considered in the grand canonical ensemble.
 	
 	
 	%\section{Conclusions}
@@ -213,3 +321,17 @@
 	\bibliography{articles,books}
 	
 \end{document}
+
+%\pagebreak
+\section{Notes}
+In this work, we want to show how one can transform the GPF for a continuous system, Eq.~\eqref{def:gpf}, to that for a lattice gas system.
+
+When considering lattice gas systems, many authors neglect the kinetic energy part of the Hamiltonian~\eqref{def:hamiltonian}. We however want to study the lattice gas as a coarse-grained model of classical many particle systems in the continuum. One requirement to such a model is to grasp the liquid-gas phase transition.
+
+For a classical, single-occupancy lattice gas, the kinetic energy was considered in~Refs.~\cite{DM18,AM24}.
+
+The term `lattice gas' seems to be first coined by Lee and Yang in~\cite{YL52,LY52}. However, the model was considered by Lennard-Jones and Devonshire in Refs.~\cite{LD37,LD38}.
+
+Other references where a transition from a continuous system to a lattice system is considered: \cite{KMV03, LSS12, PBDGC26arxiv}
+
+Worth attention is Ref.~\cite{RB60}, where a cell model is considered in the grand canonical ensemble.
