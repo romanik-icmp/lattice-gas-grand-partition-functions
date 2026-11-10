@@ -23,7 +23,9 @@
 \usepackage{orcidlink} % to insert a hyperlinked ORCiD logo
 
 %% Page output manipulation
-%\usepackage[4]{pagesel}
+%\usepackage[11-12]{pagesel}
+
+\usepackage{authblk}
 
 %% Page layout settings
 %\textwidth 160mm
@@ -32,10 +34,21 @@
 
 \title{Lattice gases: Grand partition function}
 
-\author{R.V.~Romanik \orcidlink{0009-0008-2405-9038}
-	\\ \small Yukhnovskii Institute for Condensed Matter Physics, NAS of Ukraine 
-	\\ \small 1~Svientsitskii Street, 79011, Lviv, Ukraine 
-	\\ \small romanik@icmp.lviv.ua}
+%\author{R.V.~Romanik \orcidlink{0009-0008-2405-9038}
+%	\\ \small Yukhnovskii Institute for Condensed Matter Physics, NAS of Ukraine 
+%	\\ \small 1~Svientsitskii Street, 79011, Lviv, Ukraine 
+%	\\ \small romanik@icmp.lviv.ua}
+	
+\author{R.V.~Romanik \orcidlink{0009-0008-2405-9038}%
+		\thanks{Corresponding author: \href{mailto:romanik@icmp.lviv.ua}{romanik@icmp.lviv.ua}}}
+\author{O.A.~Dobush \orcidlink{0000-0001-9237-092X}}
+\author{M.P.~Kozlovskii \orcidlink{0000-0002-8170-4215}}
+\author{I.V.~Pylyuk \orcidlink{0000-0003-1982-933X}}
+\author{M.A.~Shpot \orcidlink{0000-0001-9098-9745}}
+	
+\affil{ \small Yukhnovskii Institute for Condensed Matter Physics, 
+	\\National Academy of Sciences of Ukraine,
+		\\ \small 1~Svientsitskii Street, 79011, Lviv, Ukraine}
 
 %\date{} % to remove the date
 
@@ -44,14 +57,14 @@
 	\maketitle
 	
 	\begin{abstract}
-		Abstract text.		
+		We derive the grand partition function of a lattice gas from that of a classical continuum system by partitioning space into cells and introducing occupation numbers. The transformation is exact for interaction potentials that depend only on the cells occupied by the particles, rather than on their precise positions within those cells.
 		\\[0.5cm]
 		\textbf{Keywords:} Simple fluids, lattice gas.
 	\end{abstract}
 	
 	\tableofcontents
 	
-	%\section{Introduction}
+	\section{Introduction}
 	
 	%\pagebreak
 	\section{General formulation for a many-particle system in a continuum}
@@ -86,6 +99,7 @@
 	
 	Since the kinetic energy is quadratic in the momenta, the momentum integrations in Eq.~\eqref{def:gpf} can be evaluated analytically. Each momentum component contributes a factor $(2\pi m k_{\mathrm{B}} T)^{1/2}$. The GPF therefore takes the form	
 	\begin{equation}
+		\label{gpfCompact}
 		\Xi(T, V, \mu) = \sum_{N=0}^{\infty} \frac{\zeta^N}{N!} Z_N,
 	\end{equation}
 	where
@@ -112,9 +126,10 @@
 	\end{equation}
 	where $\Phi(\mathbf{r}, \mathbf{r}')$ is the potential of interaction between a pair of particles located at $\mathbf{r}$ and $\mathbf{r}'$, respectively. The potential of interaction can, in turn, be divided into short-range and long-range parts. Conveniently, the short-range part is usually repulsive, while the long-range part is attractive~\cite{YRjps24}.
 
-	\pagebreak
+	%\pagebreak
 	
 	\section{General formulation for lattice gas models}
+	\label{sec:genLG}
 	Consider a partition of the region $\mathcal{V}$ into $\mathcal{N}$ non-overlapping congruent cubic cells $\Delta_l$, $l \in \{1, 2, \ldots, \mathcal{N}\}$, each of volume $v = \sigma^3$, where $\sigma$ is the cell edge length. We assume that the region $\mathcal{V}$ admits such a partition and is therefore the union of all $\Delta_l$:
 	\begin{equation}
 		\mathcal{V} = \bigcup_{l=1}^{\mathcal{N}}\Delta_l,\qquad
@@ -201,7 +216,7 @@
 	\begin{equation}
 		\frac{N!}{n_1!\cdots n_{\mathcal{N}}!}.
 	\end{equation}
-	For each such assignment, the interaction energy is constant and equal to $U(\mathbf{n})$. Therefore, the integration over particle coordinates yields
+	For each such assignment, the interaction energy is constant and equal to $U(\mathbf{n})$. Therefore, the integration over particle coordinates yields (see Appendix~\ref{appendA} for more details):
 	\begin{equation}
 			\begin{aligned}
 			&\int_{\Delta_1^{n_1}\times\cdots\times
@@ -212,7 +227,7 @@
 			\prod_{l=1}^{\mathcal N}
 			\left(\int_{\Delta_l}d^3r\right)^{n_l}\\
 			&\qquad =
-			v^N\exp[-\beta U(\mathbf n)],
+			v^N\exp[-\beta U(\mathbf n)].
 		\end{aligned}
 	\end{equation}
 	Taking into account all possible occupation vectors and their corresponding multinomial factors, the configuration integral $Z_N$ becomes 
@@ -288,15 +303,15 @@
 	\end{equation}
 	Substituting this expression into the definition of the total potential energy, Eq.~\eqref{potEnergy}, yields
 	\begin{equation}
-		W_N(\mathbf{r}^N) = J \sum_{i < j} S(\mathbf{r}, \mathbf{r}') - \varepsilon \sum_{i < j} A(\mathbf{r}, \mathbf{r}').
+		W_N(\mathbf{r}^N) = J \sum_{\substack{i, j = 0 \\ i \ne j}}^{N} S(\mathbf{r}_i, \mathbf{r}_j) - \varepsilon \sum_{\substack{i, j =0 \\ j \neq j}}^{N} A(\mathbf{r}_i, \mathbf{r}_j).
 	\end{equation}
 	Taking into account the definitions of the occupation numbers, we obtain
 	\begin{equation}
-		\sum_{i < j} S(\mathbf{r}, \mathbf{r}') = \frac{1}{2} \sum_{l=1}^{\mathcal{N}} n_l (n_l - 1)
+		\sum_{i < j} S(\mathbf{r}_i, \mathbf{r}_j) = \frac{1}{2} \sum_{l=1}^{\mathcal{N}} n_l (n_l - 1)
 	\end{equation}
 	and 
 	\begin{equation}
-		\sum_{i < j} A(\mathbf{r}, \mathbf{r}') = \sum_{\langle l, l' \rangle} n_l n_{l'}.
+		\sum_{i < j} A(\mathbf{r}_i, \mathbf{r}_j) = \sum_{\langle l, l' \rangle} n_l n_{l'}.
 	\end{equation}
 	Consequently, the total potential energy takes the form
 	\begin{equation}
@@ -321,7 +336,148 @@
 	\subsection{Lattice gas with unrestricted occupancy and the Curie-Weiss interaction}
 	
 	\subsection{Lattice gases of non-interacting particles}
-
+	
+	\section{Conclusions}
+	
+	\paragraph*{Acknowledgements.} This work was supported by the National Research Foundation of Ukraine under the project No. 2023.03/0201. The authors are
+	deeply grateful to all warriors of the Ukrainian Armed Forces, living and fallen, for making this research possible.
+	
+	%\pagebreak
+	\appendix
+	
+	\section{Transformation of the configuration integral into an occupation-number representation}
+	\label{appendA}
+	
+	\setcounter{equation}{0}
+	\renewcommand{\theequation}{\thesection.\arabic{equation}}
+	
+	In this appendix, we provide a detailed derivation of the transformation of the continuum configuration integral into a sum over cell occupation numbers, used in Section~\ref{sec:genLG}. 
+	
+	Two approaches are considered. The first proceeds directly by grouping particle configurations according to their occupation vectors. The second, presented as an alternative derivation, explicitly decomposes the configuration integral into a sum over assignments of particle coordinates to cells.
+	
+	\subsection{Direct transformation to occupation numbers}
+	Consider the configuration integral $Z_N$ defined in Eq.~\eqref{def:confInt}. Since the region $\mathcal{V}$ is partitioned into $\mathcal{N}$ non-overlapping cells $\Delta_{l}$, the full configuration space can be divided into subsets corresponding to different distributions of the $N$ particle coordinates among these cells.
+	
+	These distributions can be characterized by the occupation vector
+	\begin{equation}
+		\mathbf{n} = (n_1, \ldots, n_{\mathcal{N}}), \quad \sum_{l=1}^{\mathcal{N}} = N,
+	\end{equation}
+	where $n_l$ is the number of particles occupying cell $\Delta_{l}$, as defined in Section~\ref{sec:genLG}.
+	
+	For a fixed occupation vector $\mathbf{n}$, there are generally several different assignments of particle coordinates to cells. We first evaluate the contribution to the configuration integral from one such assignment and then account for all other assignments corresponding to the same occupation vector.
+	
+	Consider, for example, an assignment in which the first $n_1$ particle coordinates belong to cell $\Delta_1$, the next $n_2$ coordinates belong to cell $\Delta_2$, and so on. The corresponding contribution to the configuration integral can be written explicitly as
+	\begin{eqnarray}
+		\mathcal{I}_{\mathbf{n}} & = & \underbrace{\int_{\Delta_1} {\rm d} {\mathbf{r}_1} \ldots \int_{\Delta_1} {\rm d} {\mathbf{r}_{n_1}} }_{n_1 \text{ integrations over } \Delta_1}
+		\nonumber\\
+		& & \underbrace{\int_{\Delta_2} {\rm d} {\mathbf{r}_{n_1 + 1}} \ldots \int_{\Delta_2} {\rm d} {\mathbf{r}_{n_1 + n_2}} }_{n_2 \text{ integrations over } \Delta_2}
+		\nonumber \\
+		& & \ldots
+		\nonumber\\
+		& & \underbrace{\int_{\Delta_{\mathcal{N}}} {\rm d} {\mathbf{r}_{N - n_{\mathcal{N}} + 1}} \ldots \int_{\Delta_{\mathcal{N}}} {\rm d} {\mathbf{r}_{N}} }_{n_{\mathcal{N}} \text{ integrations over } \Delta_{\mathcal{N}}} {\rm e}^{-\beta U(\mathbf{n})}.
+	\end{eqnarray}
+	Here, a group corresponding to $n_l = 0$ is understood to contain no integrations. The expression involves exactly $n_l$ integrations over each cell $\Delta_l$, corresponding to the $n_l$ particle coordinates assigned to that cell.
+	
+	As established in Section~\ref{sec:genLG}, the potential energy depends on particle coordinates only through the occupation vector, $W_N(\mathbf{r}^N) = U(\mathbf{n})$. Since the occupation vector is fixed for the considered assignment, the Boltzmann factor is constant throughout the corresponding integration domain and can therefore be taken outside the multiple integral. Consequently,
+	\begin{eqnarray}
+		\mathcal{I}_{\mathbf{n}} & = & {\rm e}^{-\beta U(\mathbf{n})} \prod\limits_{l=1}^{\mathcal{N}} \underbrace{\int_{\Delta_l} {\rm d} {\mathbf{r}} \ldots \int_{\Delta_l} {\rm d} {\mathbf{r}} }_{n_l \text{ factors}}
+		\nonumber\\
+		& = & {\rm e}^{-\beta U(\mathbf{n})} \prod\limits_{l=1}^{\mathcal{N}} v^{n_l}
+		\nonumber\\
+		& = & v^N {\rm e}^{-\beta U(\mathbf{n})},
+	\end{eqnarray}
+	where we used the fact that every cell has the same volume, $\int_{\Delta_l} {\rm d} {\mathbf{r}} = v$, and the relation $\sum_l n_l = N$.
+	
+	It is important to emphasize that the integral $\mathcal{I}_{\mathbf{r}}$ represents the contribution from one particular assignment of particle coordinates to cells, rather than the entire contribution associated with the occupation vector $\mathbf{n}$. Indeed, different assignments may result in the same occupation vector. All such assignments contribute equally because the interaction energy depends only on the occupation numbers and is invariant under permutations of particle coordinates.
+	
+	The number of distinct assignments corresponding to a given occupation vector can be determined as follows. From the $N$ particle coordinates, we first chose $n_l$ to be assigned to cell $\Delta_1$, then $n_2$ from the remaining $N-n_1$ to be assigned to $\Delta_2$, and so on. Their total number is the multinomial coefficient
+	\begin{equation}
+		\label{multinom}
+		\frac{N!}{n_1! n_2! \ldots n_{\mathcal{N}}!}.
+	\end{equation}
+	It counts distinct assignments of particle-coordinate integration variables to cells, not distinct physical permutations of identical particles.
+	
+	Since all assignments corresponding to the same occupation vector contribute equally, their total contribution to the configuration integral is
+	\begin{equation}
+		\frac{N!}{\prod_{l=1}^{\mathcal{N}} n_l!} v^N {\rm e}^{-\beta U(\mathbf{n})}.
+	\end{equation}
+	To obtain the complete configuration integral $Z_N$, we must now sum over all possible occupation vectors satisfying $\sum_l n_l = N$. We thus arrive at
+	\begin{equation}
+		\label{a:ZN1}
+		Z_N = v^N \sum_{\substack{n_1, \ldots, n_{\mathcal{N}} \geq 0, \\ n_1 + \ldots + n_{\mathcal{N}} = N}} \frac{N!}{\prod_{l=1}^{\mathcal{N}} n_l!} {\rm e}^{-\beta U(\mathbf{n})}.
+	\end{equation}
+	This is the required occupation-number representation of the configuration integral.
+	
+	The derivation is based on two essential observations. First, for a fixed occupation vector, integration over particle coordinates produces the factor $v^N$, because the interaction energy is constant within each corresponding integration domain. Second, the multinomial coefficient accounts for all assignments of particle coordinates to cells that produce the same occupation vector.
+	
+	We now substitute Eq.~\eqref{a:ZN1} into the grand partition function, Eq.~\eqref{gpfCompact} and obtain
+	\begin{eqnarray}
+		\Xi & = & \sum_{N=0}^{\infty} \frac{\zeta^N v^N}{N!} \sum_{\substack{n_1, \ldots, n_{\mathcal{N}} \geq 0 \\ \sum_l n_l = N}} \frac{N!}{\prod_{l=1}^{\mathcal{N}} n_l!}  {\rm e}^{-\beta U(\mathbf{n})}
+		\nonumber \\
+		& = & \sum_{N=0}^{\infty} \sum_{\substack{n_1, \ldots, n_{\mathcal{N}} \geq 0 \\ \sum_l n_l = N}}
+		\frac{\left(\zeta v\right)^N}{\prod_{l=1}^{\mathcal{N}} n_l!} {\rm e}^{-\beta U(\mathbf{n})}.
+	\end{eqnarray}
+	In the second equality, the factor $N!$ in the multinomial coefficient cancels out the factor $1/N!$ appearing in the original continuum GPF.
+	
+	The summation over $N$, together with the constrained summation over occupation vectors, can now be replaced by unrestricted summations over the individual occupation numbers:
+	\begin{equation}
+		\sum_{N=0}^{\infty} \sum_{\substack{n_1, \ldots, n_{\mathcal{N}} \geq 0 \\ \sum_l n_l = N}} F(\mathbf{n}) = \sum_{n_1=0}^{\infty} \ldots \sum_{n_{\mathcal{N}}=0}^{\infty} F(\mathbf{n}).
+	\end{equation}
+	This identity follows from the fact that each occupation vector $\mathbf{n}$ uniquely determines the total particle number $N=\sum_l n_l$. Thus, every occupation vector is counted exactly once on either side of the equality. Applying this equation, we finally arrive at
+	\begin{equation}
+		\Xi = \sum_{n_1 = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_1} \frac{{\rm e}^{\beta\mu n_1}}{n_1!} \ldots \sum_{n_{\mathcal{N}} = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_{\mathcal{N}}} \frac{{\rm e}^{\beta\mu n_{\mathcal{N}}}}{n_{\mathcal{N}}!} {\rm e}^{-\beta U(\mathbf{n})}.
+	\end{equation}
+	This result can also be written in the compact form
+	\begin{equation}
+		\Xi = \sum_{\mathbf{n} \in \mathbb{N}_0^{\mathcal{N}}} \left[\prod\limits_{l=1}^{\mathcal{N}} \frac{(\zeta v)^{n_l}}{n_l!}\right] {\rm e}^{-\beta U(\mathbf{n})}.
+	\end{equation}
+	This is the occupation-number representation of the grand partition function obtained in Section~\ref{sec:genLG}, Eq.~\eqref{eq:Xi_lg}.
+	
+	No additional approximations are introduced in this transformation, provided that the potential energy depends only on the cell occupation numbers.
+	
+	\subsection{Transformation through a sum over cell assignments}
+	
+	Starting from the configuration integral $Z_N$ defined in Eq.~\eqref{def:confInt}, we use the partition of the region $\mathcal{V}$ into $\mathcal{N}$ cells $\Delta_{l}$, introduced in Section~\ref{sec:genLG}. Since the cells are non-overlapping and cover the entire region, an integral over $\mathcal{V}$ can be decomposed as
+	\begin{equation}
+		\int_{\mathcal{V}} {\rm d}^3 r f(\mathbf{r}) = \sum_{i=1}^{\mathcal{N}} \int_{\Delta_l} {\rm d}^3 r f(\mathbf{r}).
+	\end{equation}
+	Applying this identity independently to each particle coordinate in the configuration integral, we obtain
+	\begin{equation}
+		Z_N = \sum_{l=1}^{\mathcal{N}} \ldots \sum_{l_N=1}^{\mathcal{N}} \int_{\Delta_{l_1}} {\rm d} {\mathbf{r}_1} \ldots \int_{\Delta_{l_N}} {\rm d} {\mathbf{r}_N} {\rm e}^{-\beta W_N(\mathbf{r}^N)}.
+	\end{equation}
+	Here $l_i$ denotes the index of the cell containing particle $i$. Thus, each combination $(l_1, \ldots, l_N)$ corresponds to a particular assignment of particle coordinates to cells and uniquely determines the occupation vector $\mathbf{n}$.
+	
+	As established in Section~\ref{sec:genLG}, the potential energy depends on the particle coordinates only through the occupation vector $\mathbf{n}$, so that $W_N(\mathbf{r}^N) = U(\mathbf{n})$. Since the occupation vector is fixed for each assignment $(l_1, \ldots, l_N)$, the Boltzmann factor is constant withing the corresponding multiple integral and can therefore be taken outside it:
+	\begin{equation}
+		Z_N = \sum_{l=1}^{\mathcal{N}} \ldots \sum_{l_N=1}^{\mathcal{N}} {\rm e}^{-\beta U(\mathbf{n})} \int_{\Delta_{l_1}} {\rm d} {\mathbf{r}_1} \ldots \int_{\Delta_{l_N}} {\rm d} {\mathbf{r}_N}.
+	\end{equation}
+	Note that the Boltzmann factor remains inside the summations, since the occupation vector $\mathbf{n}$, and therefore $U(\mathbf{n})$, generally differs between cell assignments.
+	
+	The remaining coordinate integrations yield
+	\begin{equation}
+		\int_{\Delta_{l_1}} {\rm d} {\mathbf{r}_1} \ldots \int_{\Delta_{l_N}} {\rm d} {\mathbf{r}_N} = \prod\limits_{i=1}^{N} \int_{\Delta_{l_i}} {\rm d} {\mathbf{r}_i} = v^N,
+	\end{equation}
+	because all cells have the same volume $v$.
+ 	
+	Consequencly,
+	\begin{equation}
+		\label{a:ZN2}
+		Z_N = v^N \sum_{l=1}^{\mathcal{N}} \ldots \sum_{l_N=1}^{\mathcal{N}} {\rm e}^{-\beta U(\mathbf{n})}.
+	\end{equation}
+	Thus, the configuration integral has been transformed into a discrete sum over all possible assignments of particle coordinates to cells.
+	Thus, the integration over all particle coordinates has been performed exactly, and the original configuration integral has been reduced to a discrete sum over all possible assignments of particle coordinates to cells.
+	
+	However, the summation in~\eqref{a:ZN2} still runs over individual assignments $(l_1, \ldots, l_N)$, rather than directly over occupation numbers.
+	
+	To obtain the occupation-number representation, we group together all assignments corresponding to the same occupation vector. Their number is given by the multinomial coefficient, Eq.~\eqref{multinom}. Since each such assignment contributes the same Boltzmann factor, the summation in Eq.~\eqref{a:ZN2} can be rewritten as
+	\begin{equation}
+		\sum_{l=1}^{\mathcal{N}} \ldots \sum_{l_N=1}^{\mathcal{N}} {\rm e}^{-\beta U(\mathbf{n})} = \sum_{\substack{n_1, \ldots, n_{\mathcal{N}} \geq 0, \\ n_1 + \ldots + n_{\mathcal{N}} = N}} \frac{N!}{\prod_{l=1}^{\mathcal{N}} n_l!} {\rm e}^{-\beta U(\mathbf{n})}
+	\end{equation}
+	Substituting this identity into Eq.~\eqref{a:ZN2} immediately recovers Eq.~\eqref{a:ZN1}.
+	
+	The two approaches therefore lead to the same occupation-number representation of the configuration integral. In the first approach, the integration domains are grouped according to occupation vectors from the outset. In the second, the coordinate integrations are evaluated for individual cell assignments, which are grouped by occupation numbers only afterward.
+	
+	%\pagebreak
 	
 	%\section{Conclusions}
 	
