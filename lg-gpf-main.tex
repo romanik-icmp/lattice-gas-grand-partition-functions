@@ -89,7 +89,7 @@
 	In the absence of external fields, the Hamiltonian is written as
 	\begin{equation}
 		\label{def:hamiltonian}
-		\mathcal{H}(\mathbf{r}^N, \mathbf{p}^N) = K_N(\mathbf{p}^N) + W_N(\mathbf{r}^N),
+		\mathcal{H}_N(\mathbf{r}^N, \mathbf{p}^N) = K_N(\mathbf{p}^N) + W_N(\mathbf{r}^N),
 	\end{equation}
 	where
 	\begin{equation}
@@ -124,7 +124,7 @@
 		\label{potEnergy}
 		W_N(\mathbf{r}^N) = \frac{1}{2} \underset{i\neq j}{\sum_{i=1}^{N} \sum_{j = 1}^{N}} \Phi(\mathbf{r}_i, \mathbf{r}_j),
 	\end{equation}
-	where $\Phi(\mathbf{r}, \mathbf{r}')$ is the potential of interaction between a pair of particles located at $\mathbf{r}$ and $\mathbf{r}'$, respectively. The potential of interaction can, in turn, be divided into short-range and long-range parts. Conveniently, the short-range part is usually repulsive, while the long-range part is attractive~\cite{YRjps24}.
+	where $\Phi(\mathbf{r}, \mathbf{r}')$ is the potential of interaction between a pair of particles located at $\mathbf{r}$ and $\mathbf{r}'$, respectively. For many simple-fluid models, the pair potential consists of a short-range repulsive contribution and a longer-range attractive contribution~\cite{YRjps24}.
 
 	%\pagebreak
 	
@@ -135,7 +135,7 @@
 		\mathcal{V} = \bigcup_{l=1}^{\mathcal{N}}\Delta_l,\qquad
 		\Delta_l \cap \Delta_{l'} = \emptyset \quad (l \neq l'),
 	\end{equation}
-	where the cells are understood to be disjoint apart from possible common boundaries of zero measure. The volume of the whole system is thus $V = v\mathcal{N}$. 
+	where the cells are understood to be disjoint apart from possible common boundaries of zero measure. Boundary points may be assigned to individual cells so that every point belongs to exactly one cell. The volume of the whole system is thus $V = v\mathcal{N}$. 
 	
 	To describe the distribution of particles among the cells, we introduce the indicator function
 	\begin{equation}
@@ -163,7 +163,7 @@
 		\label{nlSum}
 		\sum_{l=1}^{\mathcal{N}} n_l = N.
 	\end{equation}
-	In general, the occupation numbers are nonnegative integers, $n_l \in \mathbb{N}_0$. Depending on the model, they may be unrestricted or subject to a maximum occupancy. In particular, the conventional single-occupancy lattice gas corresponds to $n\in \{0, 1\}$.
+	In general, the occupation numbers are nonnegative integers, $n_l \in \mathbb{N}_0$. Depending on the model, they may be unrestricted or subject to a maximum occupancy. In particular, the conventional single-occupancy lattice gas corresponds to $n_l \in \{0, 1\}$.
 	
 	We now consider a class of interaction potentials for which the interaction between two particles depends only on the cells they occupy, rather than on their precise positions within those cells. Such a potential is constant for each pair of cells and can be represented as
 	\begin{equation}
@@ -210,7 +210,7 @@
 	\end{equation}
 	This result establishes a direct correspondence between a system of particles interacting through a cellwise-constant pair potential and a lattice model formulated in terms of occupation numbers. In particular, the interaction energy is completely determined by the occupation vector $\mathbf{n}$, irrespective of the precise positions of the particles within their cells. This property allows the configuration integrals~\eqref{def:confInt} in the grand partition function to be evaluated explicitly in terms of the cell volumes, leading to a representation involving sums over occupation numbers.
 	
-	The dependence of the potential energy exclusively on the cell occupation numbers makes it possible to transform the continuum grand partition function into a sum over occupation-number configurations. Since $W_N(\mathbf r^N)=U(\mathbf{n})$, the integrand in Eq.~\eqref{def:confInt} depends on the particle coordinates only through the occupation vector $\mathbf{n}$. Consequently, the configuration integral can be evaluated by grouping particle configurations according to their occupation numbers.
+	Because $W_N(\mathbf r^N)=U(\mathbf{n})$, the Boltzmann factor is constant for all configurations with the same occupation vector. We can therefore evaluate the configuration integral by grouping particle-coordinate assignments according to their occupation numbers.
 	
 	Consider an occupation vector $\mathbf{n}$ satisfying the constraint~\eqref{nlSum}. The number of distinct assignments of the $N$ particle-coordinate integration variables to the $\mathcal{N}$ cells, with exactly $n_l$ coordinates belonging to cell $\Delta_l$, is given by the multinomial coefficient
 	\begin{equation}
@@ -262,7 +262,8 @@
 		\nonumber\\
 		& = & \sum_{n_1 = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_1} \frac{{\rm e}^{\beta\mu n_1}}{n_1!} \ldots \sum_{n_{\mathcal{N}} = 0}^\infty \left(\frac{v}{\Lambda^3}\right)^{n_{\mathcal{N}}} \frac{{\rm e}^{\beta\mu n_{\mathcal{N}}}}{n_{\mathcal{N}}!} {\rm e}^{-\beta U(\mathbf{n})}.
 	\end{eqnarray}
-	Since $V$ is proportional to $\mathcal{N}$, we have replaced $V$ with $\mathcal{N}$ in the list of parameters of $\Xi$.
+	The local factorial weights are a consequence of the classical continuum model and its phase-space measure; lattice models defined with other microscopic statistical weights need not have the same factors~\cite{FL18}.
+	For a fixed cell volume~$v$, the system volume is $V=v\mathcal{N}$. We therefore use $\mathcal{N}$ in place of $V$ as a system-size parameter and as a parameter of $\Xi$.
 	
 	The obtained expression establishes an exact correspondence between the continuum grand partition function and its occupation-number representation for a system with cellwise-constant interactions. In particular, the factors $1/n_l!$ arise naturally from the combination of the Gibbs factor $1/N!$ and the multinomial counting of particle-coordinate assignments to cells. Thus, no additional statistical weights or approximations are introduced in the transformation.
 	
@@ -303,7 +304,7 @@
 	\end{equation}
 	Substituting this expression into the definition of the total potential energy, Eq.~\eqref{potEnergy}, yields
 	\begin{equation}
-		W_N(\mathbf{r}^N) = J \sum_{\substack{i, j = 0 \\ i \ne j}}^{N} S(\mathbf{r}_i, \mathbf{r}_j) - \varepsilon \sum_{\substack{i, j =0 \\ j \neq j}}^{N} A(\mathbf{r}_i, \mathbf{r}_j).
+		W_N(\mathbf{r}^N) = \frac{J}{2} \sum_{\substack{i, j = 1 \\ i \ne j}}^{N} S(\mathbf{r}_i, \mathbf{r}_j) - \frac{\varepsilon}{2} \sum_{\substack{i, j = 1 \\ i \neq j}}^{N} A(\mathbf{r}_i, \mathbf{r}_j).
 	\end{equation}
 	Taking into account the definitions of the occupation numbers, we obtain
 	\begin{equation}
